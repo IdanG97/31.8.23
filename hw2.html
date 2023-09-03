@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let previousNumber = null;
+        let currentNumber;
+
+        do {
+            const userInput = prompt("Enter a number (or 99 to exit):");
+
+            currentNumber = parseFloat(userInput);
+
+            if (!isNaN(currentNumber)) {
+                if (currentNumber === previousNumber) {
+                    alert("You entered two identical numbers!");
+                    break; 
+                } else if (currentNumber === -99) {
+                    alert("You entered -99. Exiting the loop.");
+                    break; 
+                }
+                previousNumber = currentNumber;
+            } else {
+                alert("Invalid input. Please enter a valid number.");
+            }
+            console.log(currentNumber)
+
+        } while (true);
+
+
+    </script>
+</body>
+
+</html>
