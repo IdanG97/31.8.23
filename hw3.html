@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Filter</title>
+    <style>
+      
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #movie-list {
+            margin-top: 20px;
+        }
+
+        .movie-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movie Filter</h1>
+    <input type="text" id="movieName" placeholder="Name of the movie">
+    <input type="number" id="movieYear" placeholder="Year of the movie">
+    <input type="text" id="movieActor" placeholder="Main actor">
+    <input type="text" id="movieGenre" placeholder="Genre (e.g., action, comedy, romantic)">
+    <button onclick="addMovie()">Add Movie</button>
+    <input type="number" id="filterYear" placeholder="Filter movies after year">
+    <button onclick="filterMovies()">Filter</button>
+    <div id="movie-list"></div>
+
+    <script>
+        const movies = [];
+
+        function addMovie() {
+            const movieName = document.getElementById('movieName').value;
+            const movieYear = parseInt(document.getElementById('movieYear').value);
+            const movieActor = document.getElementById('movieActor').value;
+            const movieGenre = document.getElementById('movieGenre').value;
+   
+            if (!movieName || isNaN(movieYear) || !movieActor || !movieGenre) {
+                alert('Please fill in all movie details.');
+                return;
+            }
+
+            const movie = {
+                name: movieName,
+                year: movieYear,
+                actor: movieActor,
+                genre: movieGenre
+            };
+            movies.push(movie);
+     
+            document.getElementById('movieName').value = '';
+            document.getElementById('movieYear').value = '';
+            document.getElementById('movieActor').value = '';
+            document.getElementById('movieGenre').value = '';
+
+            displayMovies();
+        }
+
+        function displayMovies() {
+            const movieList = document.getElementById('movie-list');
+            movieList.innerHTML = '';
+
+            movies.forEach((movie, index) => {
+                const movieCard = document.createElement('div');
+                movieCard.classList.add('movie-card');
+                movieCard.innerHTML = `
+                    <strong>${movie.name}</strong> (${movie.year})<br>
+                    Main Actor: ${movie.actor}<br>
+                    Genre: ${movie.genre}
+                `;
+                movieList.appendChild(movieCard);
+            });
+        }
+
+        function filterMovies() {
+            const filterYear = parseInt(document.getElementById('filterYear').value);
+            if (isNaN(filterYear)) {
+                alert('Please enter a valid year for filtering.');
+                return;
+            }
+
+            const filteredMovies = movies.filter(movie => movie.year > filterYear);
+
+            const movieList = document.getElementById('movie-list');
+            movieList.innerHTML = '';
+
+            filteredMovies.forEach((movie, index) => {
+                const movieCard = document.createElement('div');
+                movieCard.classList.add('movie-card');
+                movieCard.innerHTML = `
+                    <strong>${movie.name}</strong> (${movie.year})<br>
+                    Main Actor: ${movie.actor}<br>
+                    Genre: ${movie.genre}
+                `;
+                movieList.appendChild(movieCard);
+            });
+        }
+    </script>
+</body>
+</html>
